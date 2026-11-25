@@ -1,154 +1,158 @@
-﻿# SN NLP Repository
+﻿<div align="center">
 
-Ce dépôt regroupe plusieurs projets Python autour du traitement du langage naturel, de la génération multimodale, de l’analyse de données et de la prédiction financière.
+# 🧠 Polymind
 
-## Aperçu du projet principal
+**Une boîte à outils IA multimodale : voix, documents et finance, dans une seule application Streamlit.**
 
-Cette application fonctionne comme un frontend Streamlit centralisé, avec plusieurs pages :
+![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-1.56-FF4B4B?logo=streamlit&logoColor=white)
+![LangChain](https://img.shields.io/badge/LangChain-1.2-1C3C3C?logo=langchain&logoColor=white)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-2.21-FF6F00?logo=tensorflow&logoColor=white)
+![PyTorch](https://img.shields.io/badge/PyTorch-2.11-EE4C2C?logo=pytorch&logoColor=white)
+![Gemini](https://img.shields.io/badge/Google-Gemini%202.5-4285F4?logo=google&logoColor=white)
 
-- **Page d’accueil** : `app_principale.py`
-- **Audio to Text** : `pages/audio_to_text.py`
-- **RAG (PDF Q&A)** : `pages/rag_qa.py`
-- **Text to Speech** : `pages/text_to_speech.py`
-- **Chatbot Bourse** : `pages/chatbot_bourse.py`
+</div>
 
-Chaque page appelle les fonctions logiques des scripts existants sans casser les dépendances.
+---
 
-## Fonctionnalités
+## Aperçu
 
-- **Transcription audio** : charger un fichier audio et obtenir une transcription via Whisper.
-- **RAG sur PDF** : poser des questions à un document PDF à l’aide d’un pipeline de récupération de contexte.
-- **Génération vocale** : convertir du texte en audio via un modèle Hugging Face.
-- **Chatbot Bourse** : sélectionner une entreprise et un modèle de prédiction, puis générer une réponse basée sur les données de prévision.
+Polymind réunit quatre outils d'IA appliquée derrière une interface unique :
 
-## Autres scripts et notebooks
+| Outil | Description | Technologies |
+|---|---|---|
+| 🎙️ **Audio to Text** | Transcription de fichiers audio (wav, mp3, m4a) | OpenAI Whisper |
+| 🔊 **Text to Speech** | Synthèse vocale en français | Meta MMS-TTS (VITS) · Hugging Face |
+| 📄 **RAG PDF** | Questions/réponses sur un document PDF | LangChain · ChromaDB · MiniLM · Gemini 2.5 Flash |
+| 📈 **Chatbot Bourse** | Prévision de cours sur 6 mois commentée par un LLM | Amazon Chronos · LSTM (Keras) · yfinance · Gemini |
 
-- `rag.py` / `Rag_pdf.ipynb` : RAG pour le question-answering sur PDF.
-- `audio_speech.ipynb` : transcription audio avec Whisper.
-- `speech_audio.ipynb` : génération audio à partir de texte avec Edge TTS.
-- `speech_audio_hf.py` : génération audio via un modèle HF.
-- `Prediction_diabete.ipynb` : prédiction de diabète.
-- `Prediction_house_ANN.ipynb` : prédiction de prix immobiliers.
-- `Bourse/lstm_prediction.ipynb` : modèle LSTM pour prédire les prix de clôture.
-- `Bourse/prediction_lstm.ipynb` : prédiction de la direction des rendements boursiers.
-- `Bourse/chatbot.py` : chatbot financier basé sur des prédictions.
+Toutes les chaînes sont instrumentées avec **LangSmith** (traçabilité des appels LLM, latence, tokens).
 
-## Prérequis
+## Architecture
 
-- Python 3.8 ou supérieur
-- Git
-- Environnement virtuel (recommandé)
-- Connexion internet pour `yfinance`, les APIs et le téléchargement de modèles
-- Clés API pour le chatbot :
-  - `GEMINI_API_KEY` pour Google Generative AI
-  - `LANGCHAIN_API_KEY` pour LangSmith (facultatif)
-
-## Installation
-
-1. **Cloner le dépôt** :
-    ```bash
-    git clone <repository-url>
-    cd <repository-directory>
-    ```
-
-2. **Activer l’environnement virtuel** :
-    ```bash
-    # Sur Windows
-    SN_NLP\Scripts\activate
-    ```
-
-3. **Installer les dépendances** :
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-4. **Configurer les variables d’environnement** :
-    Créez un fichier `.env` à partir d’un exemple ou directement dans le dossier principal ou `Bourse/` :
-    ```bash
-    copy Bourse\.env.example .env
-    ```
-    Ajoutez les clés :
-    ```ini
-    GEMINI_API_KEY=your_gemini_api_key
-    LANGCHAIN_API_KEY=your_langsmith_api_key
-    LANGCHAIN_TRACING_V2=true
-    LANGCHAIN_PROJECT=your_project_name
-    ```
-
-    **Ne versionnez pas `.env`**.
-
-## Utilisation
-
-### Lancer l’application Streamlit
-
-1. Activez l’environnement virtuel.
-2. Lancez :
-    ```bash
-    streamlit run app_principale.py
-    ```
-3. Utilisez la barre latérale pour changer de page.
-
-### Chatbot Bourse
-
-- Choisissez une entreprise parmi : `AMD`, `GE`, `AMZN`, `INTC`.
-- Choisissez le modèle de prédiction :
-  - `Hugging Face (Chronos)` pour les prédictions provenant de Chronos.
-  - `Local LSTM` pour les modèles Keras sauvegardés dans `Bourse/models/`.
-- Posez votre question, puis générez la réponse.
-
-### Audio to Text
-
-- Téléversez un fichier audio.
-- Transcrivez le texte.
-- Téléchargez la transcription.
-
-### Text to Speech
-
-- Entrez du texte.
-- Générez l’audio et écoutez-le dans le navigateur.
-- Téléchargez le fichier `.wav`.
-
-### RAG PDF
-
-- Téléversez un PDF.
-- Posez une question sur le document.
-- Le système utilise un pipeline de récupération de contexte pour répondre.
+```text
+             ┌──────────────────────── Streamlit (streamlit_app.py + pages/) ────────────────────────┐
+             │                                                                                         │
+   Audio ──▶ │  Whisper ──▶ texte          Texte ──▶ VITS ──▶ audio .wav                              │
+             │                                                                                         │
+   PDF ────▶ │  PyPDF ──▶ chunks ──▶ embeddings MiniLM ──▶ Chroma ──▶ top-5 ──▶ Gemini ──▶ réponse     │
+             │                                                                                         │
+   Ticker ─▶ │  yfinance ──▶ Chronos (zero-shot) | LSTM entraîné ──▶ prévision ──▶ Gemini ──▶ analyse  │
+             └─────────────────────────────────────────────────────────────────────────────────────────┘
+                                                   │
+                                                LangSmith (tracing)
+```
 
 ## Structure du projet
 
-```
-SN NLP/
-├── app_principale.py
-├── pages/
-│   ├── audio_to_text.py
-│   ├── rag_qa.py
-│   ├── text_to_speech.py
-│   └── chatbot_bourse.py
-├── audio_text.py
-├── rag.py
-├── speech_audio_hf.py
-├── Bourse/
-│   ├── chatbot.py
-│   ├── prediction_utils.py
-│   ├── lstm_prediction.ipynb
-│   ├── prediction_lstm.ipynb
-│   └── models/
-├── archive/
-├── chroma_db/
+```text
+polymind/
+├── streamlit_app.py          # Point d'entrée de l'application
+├── pages/                    # Une page Streamlit par outil
+│   ├── 1_Audio_to_Text.py
+│   ├── 2_Text_to_Speech.py
+│   ├── 3_RAG_PDF.py
+│   └── 4_Chatbot_Bourse.py
+├── polymind/                 # Logique métier (package Python)
+│   ├── config.py             # Chemins + variables d'environnement + tracing
+│   ├── speech_to_text.py     # Whisper
+│   ├── text_to_speech.py     # MMS-TTS / VITS
+│   ├── rag.py                # Pipeline RAG
+│   └── finance/
+│       ├── prediction.py     # Prévisions Chronos & LSTM
+│       └── chatbot.py        # Analyse des prévisions par Gemini
+├── models/
+│   ├── finance/              # LSTM entraînés (AMD, AMZN, GE, INTC) + prédictions .npy
+│   └── ml/                   # Modèles des notebooks ML (diabète, immobilier)
+├── notebooks/
+│   ├── nlp/                  # RAG, Whisper, Edge-TTS
+│   ├── ml/                   # Classification diabète, régression prix immobilier (ANN)
+│   └── finance/              # Entraînement LSTM, direction des rendements, Chronos
+├── scripts/                  # Scripts utilitaires (smoke tests)
+├── assets/samples/           # Fichier audio d'exemple
+├── data/                     # Jeux de données (non versionnés, voir data/README.md)
 ├── requirements.txt
-└── README.md
+├── packages.txt              # Dépendances système (ffmpeg) pour Streamlit Cloud
+└── .env.example
 ```
 
-## Notes importantes
+## Installation
 
-- Vérifiez que `Bourse/models/` contient bien les fichiers de modèles nécessaires.
-- Assurez-vous que `GEMINI_API_KEY` est configurée avant d’utiliser le chatbot financier.
-- Si vous utilisez `Chronos`, la qualité des prédictions longues peut être moins bonne au-delà de 64 jours.
+**Prérequis :** Python 3.10+, [ffmpeg](https://ffmpeg.org/download.html) (requis par Whisper), une clé API [Google Gemini](https://aistudio.google.com/apikey).
 
-## Support
+```bash
+git clone https://github.com/Loscope29/SN_NLP.git polymind
+cd polymind
 
-- Pour une erreur d’installation : vérifiez le venv et les paquets installés.
-- Pour `yfinance` : assurez-vous d’avoir internet.
-- Pour le chatbot : vérifiez les clés API dans `.env`.
+python -m venv .venv
+# Windows
+.venv\Scripts\activate
+# macOS / Linux
+source .venv/bin/activate
 
-Pour toute question, consultez le code ou ajoutez une issue dans le dépôt.
+pip install -r requirements.txt
+```
+
+### Configuration
+
+```bash
+cp .env.example .env      # Windows : copy .env.example .env
+```
+
+| Variable | Obligatoire | Rôle |
+|---|---|---|
+| `GEMINI_API_KEY` | ✅ | LLM du RAG et du chatbot bourse |
+| `LANGSMITH_API_KEY` | ➖ | Active le tracing LangSmith |
+| `LANGSMITH_PROJECT` | ➖ | Nom du projet dans LangSmith (défaut : `Polymind`) |
+
+## Utilisation
+
+```bash
+streamlit run streamlit_app.py
+```
+
+L'application s'ouvre sur <http://localhost:8501>. Chaque outil est accessible depuis la barre latérale.
+
+> Au premier lancement, les modèles Whisper, MMS-TTS, MiniLM et Chronos sont téléchargés depuis Hugging Face / OpenAI (plusieurs centaines de Mo).
+
+### Chatbot Bourse
+
+1. Choisissez une entreprise : `AMD`, `AMZN`, `GE` ou `INTC`.
+2. Choisissez le moteur de prévision :
+   - **Hugging Face (Chronos)** : modèle de fondation pour séries temporelles, sans entraînement (`amazon/chronos-t5-small`).
+   - **Local LSTM** : modèles entraînés dans `notebooks/finance/lstm_price_prediction.ipynb` sur 10 ans d'historique (transformation log → sqrt → différenciation).
+3. Posez votre question. Gemini répond à partir de la tendance prévue sur ~126 jours de bourse.
+
+> ⚠️ Projet pédagogique : les prévisions ne constituent pas un conseil en investissement.
+
+### Test rapide
+
+```bash
+python -m scripts.smoke_test_finance
+```
+
+## Notebooks
+
+| Notebook | Sujet |
+|---|---|
+| `notebooks/nlp/rag_pdf.ipynb` | Prototype du pipeline RAG avec persistance Chroma |
+| `notebooks/nlp/speech_to_text_whisper.ipynb` | Transcription avec Whisper |
+| `notebooks/nlp/text_to_speech_edge_tts.ipynb` | Synthèse vocale avec Edge-TTS |
+| `notebooks/ml/diabetes_prediction.ipynb` | Classification du diabète (BRFSS 2015), réseau de neurones |
+| `notebooks/ml/house_price_ann.ipynb` | Régression du prix immobilier, ANN |
+| `notebooks/finance/lstm_price_prediction.ipynb` | Entraînement des LSTM de prix de clôture |
+| `notebooks/finance/lstm_return_direction.ipynb` | Direction des rendements, *directional accuracy*, ratio de Sharpe |
+| `notebooks/finance/chronos_forecasting.ipynb` | Prévision zero-shot avec Chronos |
+
+Les notebooks se lancent depuis leur dossier et lisent les données dans `data/` (voir [data/README.md](data/README.md)).
+
+## Déploiement (Streamlit Community Cloud)
+
+1. Connectez le dépôt sur [share.streamlit.io](https://share.streamlit.io).
+2. *Main file path* : `streamlit_app.py`.
+3. Ajoutez `GEMINI_API_KEY` (et éventuellement `LANGSMITH_API_KEY`) dans **Settings → Secrets**.
+4. `packages.txt` installe automatiquement `ffmpeg`.
+
+## Auteur
+
+**Loscope29** · Master 2 Data Science, ISJ · [GitHub](https://github.com/Loscope29)

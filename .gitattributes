@@ -1,0 +1,9 @@
+* text=auto eol=lf
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+*.ipynb text eol=lf
+*.keras binary
+*.h5 binary
+*.npy binary
+*.wav binary
+*.mp3 binary

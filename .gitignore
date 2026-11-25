@@ -1,0 +1,39 @@
+# --- Secrets ---
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+
+# --- Environnements virtuels ---
+.venv/
+venv/
+env/
+SN_NLP/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- Jupyter ---
+.ipynb_checkpoints/
+
+# --- Données (voir data/README.md) ---
+data/*
+!data/README.md
+
+# --- Sorties générées (audio, bases vectorielles, transcriptions) ---
+outputs/
+chroma_db/
+temp*.wav
+temp*.pdf
+
+# --- IDE / OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
