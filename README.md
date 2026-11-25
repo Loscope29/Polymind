@@ -184,6 +184,8 @@ Seule exception connue : **chromadb** (CVE-2026-45829, -45830, -45831, -45833, s
 
 L'image écoute sur le port 8501 et expose un healthcheck (`/_stcore/health`). Elle peut donc être déployée telle quelle sur un service de conteneurs (Google Cloud Run, Azure Container Apps, AWS App Runner, Hugging Face Spaces). Prévoyez au moins 4 Go de RAM : Whisper, Chronos et TensorFlow sont chargés en mémoire.
 
+Déploiement pas à pas sur Google Cloud Run (Cloud Build, Artifact Registry, Secret Manager, CI/CD GitHub Actions) : [docs/deploiement-cloud-run.md](docs/deploiement-cloud-run.md).
+
 ## Déploiement (Streamlit Community Cloud)
 
 1. Connectez le dépôt sur [share.streamlit.io](https://share.streamlit.io).
