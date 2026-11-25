@@ -4,8 +4,8 @@ import numpy as np
 import streamlit as st
 from scipy.io.wavfile import write
 
-st.set_page_config(page_title="Text to Speech · Polymind", page_icon="🔊")
-st.title("🔊 Text to Speech avec VITS")
+st.set_page_config(page_title="Text to Speech · Polymind")
+st.title("Text to Speech avec VITS")
 st.write("Entrez un texte en français pour générer l'audio correspondant.")
 
 

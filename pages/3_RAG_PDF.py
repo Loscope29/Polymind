@@ -5,8 +5,8 @@ import streamlit as st
 
 from polymind import rag
 
-st.set_page_config(page_title="RAG PDF · Polymind", page_icon="📄")
-st.title("📄 RAG : questions et réponses sur un PDF")
+st.set_page_config(page_title="RAG PDF · Polymind")
+st.title("RAG : questions et réponses sur un PDF")
 st.write("Téléversez un PDF et posez une question sur son contenu.")
 
 pdf_file = st.file_uploader("Choisir un fichier PDF", type=["pdf"])

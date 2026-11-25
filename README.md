@@ -1,6 +1,6 @@
 ﻿<div align="center">
 
-# 🧠 Polymind
+# Polymind
 
 **Une boîte à outils IA multimodale : voix, documents et finance, dans une seule application Streamlit.**
 
@@ -21,10 +21,10 @@ Polymind réunit quatre outils d'IA appliquée derrière une interface unique :
 
 | Outil | Description | Technologies |
 |---|---|---|
-| 🎙️ **Audio to Text** | Transcription de fichiers audio (wav, mp3, m4a) | OpenAI Whisper |
-| 🔊 **Text to Speech** | Synthèse vocale en français | Meta MMS-TTS (VITS) · Hugging Face |
-| 📄 **RAG PDF** | Questions/réponses sur un document PDF | LangChain · ChromaDB · MiniLM · Gemini 2.5 Flash |
-| 📈 **Chatbot Bourse** | Prévision de cours sur 6 mois commentée par un LLM | Amazon Chronos · LSTM (Keras) · yfinance · Gemini |
+| **Audio to Text** | Transcription de fichiers audio (wav, mp3, m4a) | OpenAI Whisper |
+| **Text to Speech** | Synthèse vocale en français | Meta MMS-TTS (VITS) · Hugging Face |
+| **RAG PDF** | Questions/réponses sur un document PDF | LangChain · ChromaDB · MiniLM · Gemini 2.5 Flash |
+| **Chatbot Bourse** | Prévision de cours sur 6 mois commentée par un LLM | Amazon Chronos · LSTM (Keras) · yfinance · Gemini |
 
 Toutes les chaînes sont instrumentées avec **LangSmith** (traçabilité des appels LLM, latence, tokens).
 
@@ -101,9 +101,9 @@ cp .env.example .env      # Windows : copy .env.example .env
 
 | Variable | Obligatoire | Rôle |
 |---|---|---|
-| `GEMINI_API_KEY` | ✅ | LLM du RAG et du chatbot bourse |
-| `LANGSMITH_API_KEY` | ➖ | Active le tracing LangSmith |
-| `LANGSMITH_PROJECT` | ➖ | Nom du projet dans LangSmith (défaut : `Polymind`) |
+| `GEMINI_API_KEY` | Oui | LLM du RAG et du chatbot bourse |
+| `LANGSMITH_API_KEY` | Non | Active le tracing LangSmith |
+| `LANGSMITH_PROJECT` | Non | Nom du projet dans LangSmith (défaut : `Polymind`) |
 
 ## Utilisation
 
@@ -123,7 +123,7 @@ L'application s'ouvre sur <http://localhost:8501>. Chaque outil est accessible d
    - **Local LSTM** : modèles entraînés dans `notebooks/finance/lstm_price_prediction.ipynb` sur 10 ans d'historique (transformation log → sqrt → différenciation).
 3. Posez votre question. Gemini répond à partir de la tendance prévue sur ~126 jours de bourse.
 
-> ⚠️ Projet pédagogique : les prévisions ne constituent pas un conseil en investissement.
+> **Avertissement :** projet pédagogique, les prévisions ne constituent pas un conseil en investissement.
 
 ### Test rapide
 

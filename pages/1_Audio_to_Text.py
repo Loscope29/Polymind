@@ -3,8 +3,8 @@ import tempfile
 
 import streamlit as st
 
-st.set_page_config(page_title="Audio to Text · Polymind", page_icon="🎙️")
-st.title("🎙️ Audio to Text avec Whisper")
+st.set_page_config(page_title="Audio to Text · Polymind")
+st.title("Audio to Text avec Whisper")
 st.write("Téléversez un fichier audio pour le transcrire en texte.")
 
 

@@ -29,7 +29,7 @@ def get_chatbot_response(company, predictions, user_question):
         variation = 0
     else:
         variation = ((last_price - first_price) / first_price) * 100
-    trend = "hausse 📈" if variation > 0 else "baisse 📉"
+    trend = "hausse" if variation > 0 else "baisse"
 
     system_prompt = f"""Tu es un assistant financier expert.Tu aides les utilisateurs à comprendre les tendances du marché boursier en te basant sur des données de prédiction. 
 

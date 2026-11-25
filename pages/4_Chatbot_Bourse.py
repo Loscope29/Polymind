@@ -1,8 +1,8 @@
 import streamlit as st
 from polymind.finance import chatbot, prediction
 
-st.set_page_config(page_title="Chatbot Bourse · Polymind", page_icon="📈")
-st.title("📈 Chatbot financier")
+st.set_page_config(page_title="Chatbot Bourse · Polymind")
+st.title("Chatbot financier")
 st.write("Choisissez une entreprise et un modèle de prédiction, puis posez votre question.")
 
 company = st.selectbox("Choisir l'entreprise:", ["AMD", "GE", "AMZN", "INTC"])
