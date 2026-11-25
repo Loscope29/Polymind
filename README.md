@@ -4,11 +4,11 @@
 
 **Une boîte à outils IA multimodale : voix, documents et finance, dans une seule application Streamlit.**
 
-![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
-![Streamlit](https://img.shields.io/badge/Streamlit-1.56-FF4B4B?logo=streamlit&logoColor=white)
-![LangChain](https://img.shields.io/badge/LangChain-1.2-1C3C3C?logo=langchain&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.12%2B-3776AB?logo=python&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-1.67-FF4B4B?logo=streamlit&logoColor=white)
+![LangChain](https://img.shields.io/badge/LangChain-1.8-1C3C3C?logo=langchain&logoColor=white)
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-2.21-FF6F00?logo=tensorflow&logoColor=white)
-![PyTorch](https://img.shields.io/badge/PyTorch-2.11-EE4C2C?logo=pytorch&logoColor=white)
+![PyTorch](https://img.shields.io/badge/PyTorch-2.15-EE4C2C?logo=pytorch&logoColor=white)
 ![Gemini](https://img.shields.io/badge/Google-Gemini%202.5-4285F4?logo=google&logoColor=white)
 
 </div>
@@ -82,7 +82,7 @@ polymind/
 
 ## Installation
 
-**Prérequis :** Python 3.10+, [ffmpeg](https://ffmpeg.org/download.html) (requis par Whisper), une clé API [Google Gemini](https://aistudio.google.com/apikey).
+**Prérequis :** Python 3.12+ (3.13 recommandé), [ffmpeg](https://ffmpeg.org/download.html) (requis par Whisper), une clé API [Google Gemini](https://aistudio.google.com/apikey).
 
 ```bash
 git clone https://github.com/Loscope29/polymind.git
@@ -170,6 +170,17 @@ docker run -p 8501:8501 --env-file .env polymind
 ```
 
 Commandes utiles : `docker compose logs -f` (journaux), `docker compose down` (arrêt).
+
+### Sécurité des dépendances
+
+`requirements.txt` est audité avec [pip-audit](https://pypi.org/project/pip-audit/) :
+
+```bash
+pip install pip-audit
+pip-audit -r requirements.txt --no-deps --disable-pip
+```
+
+Seule exception connue : **chromadb** (CVE-2026-45829, -45830, -45831, -45833, sans correctif publié). Ces failles visent le serveur HTTP de Chroma et son contrôle d'accès ; Polymind utilise Chroma en mémoire, dans le processus de l'application, sans exposer ce serveur : elles ne sont pas exploitables ici.
 
 L'image écoute sur le port 8501 et expose un healthcheck (`/_stcore/health`). Elle peut donc être déployée telle quelle sur un service de conteneurs (Google Cloud Run, Azure Container Apps, AWS App Runner, Hugging Face Spaces). Prévoyez au moins 4 Go de RAM : Whisper, Chronos et TensorFlow sont chargés en mémoire.
 
