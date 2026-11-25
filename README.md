@@ -81,7 +81,7 @@ polymind/
 **Prérequis :** Python 3.10+, [ffmpeg](https://ffmpeg.org/download.html) (requis par Whisper), une clé API [Google Gemini](https://aistudio.google.com/apikey).
 
 ```bash
-git clone https://github.com/Loscope29/SN_NLP.git polymind
+git clone https://github.com/Loscope29/polymind.git
 cd polymind
 
 python -m venv .venv
