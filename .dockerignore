@@ -1,0 +1,23 @@
+# Secrets : passés à l'exécution, jamais copiés dans l'image
+.env
+.env.*
+!.env.example
+
+# Environnements et caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Inutile à l'exécution de l'app
+.git/
+.devcontainer/
+.vscode/
+notebooks/
+data/
+outputs/
+scripts/
+Dockerfile
+docker-compose.yml
+.dockerignore

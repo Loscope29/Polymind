@@ -73,6 +73,8 @@ polymind/
 ├── data/                     # Jeux de données (non versionnés, voir data/README.md)
 ├── requirements.txt
 ├── packages.txt              # Dépendances système (ffmpeg) pour Streamlit Cloud
+├── Dockerfile
+├── docker-compose.yml
 └── .env.example
 ```
 
@@ -145,6 +147,28 @@ python -m scripts.smoke_test_finance
 | `notebooks/finance/chronos_forecasting.ipynb` | Prévision zero-shot avec Chronos |
 
 Les notebooks se lancent depuis leur dossier et lisent les données dans `data/` (voir [data/README.md](data/README.md)).
+
+## Docker
+
+L'image embarque l'application, ffmpeg et PyTorch en version CPU. Les clés API sont injectées à l'exécution et ne sont jamais copiées dans l'image.
+
+```bash
+cp .env.example .env          # renseigner GEMINI_API_KEY
+docker compose up --build -d
+```
+
+L'application est disponible sur <http://localhost:8501>. Les modèles téléchargés au premier usage sont conservés dans le volume `model-cache`.
+
+Sans Compose :
+
+```bash
+docker build -t polymind .
+docker run -p 8501:8501 --env-file .env -v polymind-cache:/home/app/.cache polymind
+```
+
+Commandes utiles : `docker compose logs -f` (journaux), `docker compose down` (arrêt).
+
+L'image écoute sur le port 8501 et expose un healthcheck (`/_stcore/health`). Elle peut donc être déployée telle quelle sur un service de conteneurs (Google Cloud Run, Azure Container Apps, AWS App Runner, Hugging Face Spaces). Prévoyez au moins 4 Go de RAM : Whisper, Chronos et TensorFlow sont chargés en mémoire.
 
 ## Déploiement (Streamlit Community Cloud)
 
