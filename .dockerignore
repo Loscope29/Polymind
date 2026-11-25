@@ -18,6 +18,10 @@ notebooks/
 data/
 outputs/
 scripts/
+!scripts/__init__.py
+!scripts/download_models.py
+requirements.in
+requirements-dev.txt
 Dockerfile
 docker-compose.yml
 .dockerignore

@@ -9,6 +9,12 @@ ROOT_DIR = Path(__file__).resolve().parent.parent
 MODELS_DIR = ROOT_DIR / "models"
 DATA_DIR = ROOT_DIR / "data"
 
+# Modèles pré-entraînés (pré-téléchargés dans l'image Docker par scripts/download_models.py)
+WHISPER_MODEL = "base"
+TTS_MODEL = "facebook/mms-tts-fra"
+EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
+CHRONOS_MODEL = "amazon/chronos-t5-small"
+
 load_dotenv(ROOT_DIR / ".env")
 
 

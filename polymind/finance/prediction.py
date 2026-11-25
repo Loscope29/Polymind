@@ -10,7 +10,7 @@ from tensorflow.keras.models import load_model
 from sklearn.preprocessing import MinMaxScaler
 import pandas as pd
 
-from polymind.config import MODELS_DIR
+from polymind.config import CHRONOS_MODEL, MODELS_DIR
 
 TICKERS = {
     "AMD": "AMD",
@@ -39,7 +39,7 @@ def predict_with_hf(company, months=6):
         price = price.reshape(1, -1)
     context = torch.from_numpy(price)
     pipeline = ChronosPipeline.from_pretrained(
-        "amazon/chronos-t5-small",
+        CHRONOS_MODEL,
         device_map="cpu",
         dtype=torch.float32,
     )

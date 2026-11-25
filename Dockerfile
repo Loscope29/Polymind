@@ -5,6 +5,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PIP_ROOT_USER_ACTION=ignore \
     HF_HOME=/home/app/.cache/huggingface \
     XDG_CACHE_HOME=/home/app/.cache
 
@@ -23,10 +24,19 @@ RUN pip install torch==2.11.0 --index-url https://download.pytorch.org/whl/cpu \
     && pip install -r requirements.txt \
     && pip uninstall -y triton
 
-COPY --chown=app:app . .
-RUN mkdir -p /home/app/.cache && chown -R app:app /home/app/.cache
-
+# Modèles pré-entraînés intégrés à l'image : aucun téléchargement au démarrage
+# (indispensable sur Cloud Run, sans disque persistant). Couche placée avant le code
+# de l'application pour rester en cache tant que les noms des modèles ne changent pas.
+COPY --chown=app:app polymind/__init__.py polymind/config.py polymind/
+COPY --chown=app:app scripts/__init__.py scripts/download_models.py scripts/
 USER app
+RUN python -m scripts.download_models
+
+# Exécution hors ligne : Hugging Face ne doit plus rien télécharger
+ENV HF_HUB_OFFLINE=1 \
+    TRANSFORMERS_OFFLINE=1
+
+COPY --chown=app:app . .
 EXPOSE 8501
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=60s --retries=3 \

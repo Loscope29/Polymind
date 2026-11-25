@@ -3,12 +3,12 @@
 import whisper
 from langsmith import traceable
 
-from polymind.config import setup_tracing
+from polymind.config import WHISPER_MODEL, setup_tracing
 
 setup_tracing()
 
-# Chargement du modèle Whisper (CPU pour compatibilité avec Streamlit Cloud)
-model = whisper.load_model("base", device="cpu")
+# Chargement du modèle Whisper sur CPU (pas de GPU en production)
+model = whisper.load_model(WHISPER_MODEL, device="cpu")
 
 
 @traceable(run_type="chain", name="AudioToText-Whisper")

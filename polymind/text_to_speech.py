@@ -5,14 +5,12 @@ import torch
 from langsmith import traceable
 from transformers import AutoTokenizer, VitsModel
 
-from polymind.config import setup_tracing
+from polymind.config import TTS_MODEL, setup_tracing
 
 setup_tracing()
 
-MODEL_NAME = "facebook/mms-tts-fra"
-
-model = VitsModel.from_pretrained(MODEL_NAME)
-tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+model = VitsModel.from_pretrained(TTS_MODEL)
+tokenizer = AutoTokenizer.from_pretrained(TTS_MODEL)
 
 
 @traceable(run_type="chain", name="TextToSpeech-VITS")

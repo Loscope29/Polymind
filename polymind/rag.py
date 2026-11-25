@@ -10,7 +10,7 @@ from langchain_classic.chains import create_retrieval_chain
 from langchain_classic.chains.combine_documents import create_stuff_documents_chain
 from langsmith import traceable
 
-from polymind.config import get_gemini_key, setup_tracing
+from polymind.config import EMBEDDING_MODEL, get_gemini_key, setup_tracing
 
 setup_tracing()
 
@@ -28,7 +28,7 @@ def split_text(documents, chunk_size=1000, chunk_overlap=200):
     return text_splitter.split_documents(documents)
 
 
-def create_vector_store(chunks, model_name="sentence-transformers/all-MiniLM-L6-v2"):
+def create_vector_store(chunks, model_name=EMBEDDING_MODEL):
     embeddings = HuggingFaceEmbeddings(model_name=model_name)
     return Chroma.from_documents(chunks, embeddings)
 

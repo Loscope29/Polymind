@@ -9,10 +9,5 @@ services:
     env_file:
       - path: .env
         required: false
-    volumes:
-      # Conserve les modèles téléchargés (Whisper, MMS-TTS, MiniLM, Chronos) entre les redémarrages
-      - model-cache:/home/app/.cache
     restart: unless-stopped
 
-volumes:
-  model-cache:

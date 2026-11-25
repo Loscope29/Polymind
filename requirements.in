@@ -1,0 +1,34 @@
+# Dépendances directes de l'application Streamlit (source de requirements.txt).
+# requirements.txt en est la résolution complète, figée sous Linux.
+# Les notebooks ont leurs propres extras dans requirements-dev.txt.
+
+# Interface et configuration
+streamlit
+python-dotenv
+langsmith
+
+# Audio : Whisper (STT) et MMS-TTS / VITS (TTS)
+openai-whisper
+torch
+transformers
+accelerate
+
+# RAG PDF
+pypdf
+chromadb
+sentence-transformers
+langchain-core
+langchain-classic
+langchain-community
+langchain-text-splitters
+langchain-huggingface
+langchain-google-genai
+
+# Finance : Chronos, LSTM Keras, données Yahoo Finance
+chronos-forecasting
+tensorflow
+tf_keras
+scikit-learn
+numpy
+pandas
+yfinance

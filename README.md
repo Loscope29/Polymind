@@ -68,10 +68,12 @@ polymind/
 │   ├── nlp/                  # RAG, Whisper, Edge-TTS
 │   ├── ml/                   # Classification diabète, régression prix immobilier (ANN)
 │   └── finance/              # Entraînement LSTM, direction des rendements, Chronos
-├── scripts/                  # Scripts utilitaires (smoke tests)
+├── scripts/                  # Smoke tests, pré-téléchargement des modèles
 ├── assets/samples/           # Fichier audio d'exemple
 ├── data/                     # Jeux de données (non versionnés, voir data/README.md)
-├── requirements.txt
+├── requirements.in           # Dépendances directes de l'application
+├── requirements.txt          # Leur résolution figée (installée dans l'image)
+├── requirements-dev.txt      # + extras des notebooks (Jupyter, seaborn, statsmodels…)
 ├── packages.txt              # Dépendances système (ffmpeg) pour Streamlit Cloud
 ├── Dockerfile
 ├── docker-compose.yml
@@ -92,7 +94,8 @@ python -m venv .venv
 # macOS / Linux
 source .venv/bin/activate
 
-pip install -r requirements.txt
+pip install -r requirements.txt       # application seule
+pip install -r requirements-dev.txt   # application + notebooks
 ```
 
 ### Configuration
@@ -150,20 +153,20 @@ Les notebooks se lancent depuis leur dossier et lisent les données dans `data/`
 
 ## Docker
 
-L'image embarque l'application, ffmpeg et PyTorch en version CPU. Les clés API sont injectées à l'exécution et ne sont jamais copiées dans l'image.
+L'image embarque l'application, ffmpeg, PyTorch en version CPU et les modèles pré-entraînés (Whisper, MMS-TTS, MiniLM, Chronos), téléchargés au build par `scripts/download_models.py` : le conteneur démarre sans accès à Hugging Face. Les clés API sont injectées à l'exécution et ne sont jamais copiées dans l'image.
 
 ```bash
 cp .env.example .env          # renseigner GEMINI_API_KEY
 docker compose up --build -d
 ```
 
-L'application est disponible sur <http://localhost:8501>. Les modèles téléchargés au premier usage sont conservés dans le volume `model-cache`.
+L'application est disponible sur <http://localhost:8501>.
 
 Sans Compose :
 
 ```bash
 docker build -t polymind .
-docker run -p 8501:8501 --env-file .env -v polymind-cache:/home/app/.cache polymind
+docker run -p 8501:8501 --env-file .env polymind
 ```
 
 Commandes utiles : `docker compose logs -f` (journaux), `docker compose down` (arrêt).
