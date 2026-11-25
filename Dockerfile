@@ -16,10 +16,12 @@ RUN apt-get update \
 RUN useradd --create-home --uid 1000 app
 WORKDIR /app
 
-# PyTorch CPU (évite ~5 Go de bibliothèques CUDA), puis le reste des dépendances
+# PyTorch CPU (évite ~5 Go de bibliothèques CUDA), puis le reste des dépendances.
+# Triton (~1 Go, installé par Whisper) ne sert qu'avec un GPU : on le retire.
 COPY requirements.txt .
 RUN pip install torch==2.11.0 --index-url https://download.pytorch.org/whl/cpu \
-    && pip install -r requirements.txt
+    && pip install -r requirements.txt \
+    && pip uninstall -y triton
 
 COPY --chown=app:app . .
 RUN mkdir -p /home/app/.cache && chown -R app:app /home/app/.cache
