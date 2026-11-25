@@ -1,3 +1,4 @@
+name: polymind
 services:
   polymind:
     build: .
